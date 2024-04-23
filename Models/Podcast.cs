@@ -4,7 +4,7 @@ namespace podcast_player_BE.Models
 {
     public class Podcast
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Image { get; set; }
         public string Author { get; set; }

@@ -4,8 +4,8 @@ namespace podcast_player_BE.Models
 {
     public class PlaylistPodcast
     {
-        public string Id { get; set; }
-        public string PlaylistId { get; set; }
-        public string PodcastId { get; set; }
+        public int Id { get; set; }
+        public int PlaylistId { get; set; }
+        public int PodcastId { get; set; }
     }
 }
