@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
@@ -12,9 +13,10 @@ namespace podcast_player_BE.Migrations
                 name: "PlaylistPodcasts",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "text", nullable: false),
-                    PlaylistId = table.Column<string>(type: "text", nullable: false),
-                    PodcastId = table.Column<string>(type: "text", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    PlaylistId = table.Column<int>(type: "integer", nullable: false),
+                    PodcastId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -25,12 +27,12 @@ namespace podcast_player_BE.Migrations
                 name: "Playlists",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "text", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Title = table.Column<string>(type: "text", nullable: false),
-                    PodcastQuantity = table.Column<string>(type: "text", nullable: false),
+                    PodcastQuantity = table.Column<int>(type: "integer", nullable: false),
                     Image = table.Column<string>(type: "text", nullable: false),
-                    PodcastID = table.Column<string>(type: "text", nullable: false),
-                    OwnerID = table.Column<string>(type: "text", nullable: false)
+                    OwnerID = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -41,7 +43,8 @@ namespace podcast_player_BE.Migrations
                 name: "Podcasts",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "text", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Image = table.Column<string>(type: "text", nullable: false),
                     Author = table.Column<string>(type: "text", nullable: false),
@@ -57,7 +60,8 @@ namespace podcast_player_BE.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "text", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     FullName = table.Column<string>(type: "text", nullable: false),
                     Uid = table.Column<string>(type: "text", nullable: false)
                 },
@@ -71,22 +75,28 @@ namespace podcast_player_BE.Migrations
                 columns: new[] { "Id", "PlaylistId", "PodcastId" },
                 values: new object[,]
                 {
-                    { "1", "1", "1" },
-                    { "2", "1", "2" },
-                    { "3", "1", "3" },
-                    { "4", "2", "2" },
-                    { "5", "2", "3" },
-                    { "6", "3", "3" }
+                    { 1, 1, 1 },
+                    { 2, 1, 2 },
+                    { 3, 1, 3 },
+                    { 4, 2, 4 },
+                    { 5, 2, 5 },
+                    { 6, 3, 6 },
+                    { 7, 4, 7 },
+                    { 8, 4, 8 },
+                    { 9, 5, 9 },
+                    { 10, 5, 10 }
                 });
 
             migrationBuilder.InsertData(
                 table: "Playlists",
-                columns: new[] { "Id", "Image", "OwnerID", "PodcastID", "PodcastQuantity", "Title" },
+                columns: new[] { "Id", "Image", "OwnerID", "PodcastQuantity", "Title" },
                 values: new object[,]
                 {
-                    { "1", "playlist1.jpg", "1", "1,2,3", "3", "Playlist 1" },
-                    { "2", "playlist2.jpg", "2", "2,3", "2", "Playlist 2" },
-                    { "3", "playlist3.jpg", "3", "3", "1", "Playlist 3" }
+                    { 1, "favorites.jpg", 1, 3, "Favorites" },
+                    { 2, "toppicks.jpg", 2, 2, "Top Picks" },
+                    { 3, "morningdrive.jpg", 3, 1, "Morning Drive" },
+                    { 4, "inspiration.jpg", 1, 2, "Inspiration" },
+                    { 5, "dailycommute.jpg", 2, 2, "Daily Commute" }
                 });
 
             migrationBuilder.InsertData(
@@ -94,9 +104,16 @@ namespace podcast_player_BE.Migrations
                 columns: new[] { "Id", "Author", "Description", "Image", "Length", "Name" },
                 values: new object[,]
                 {
-                    { "1", "Author 1", "Description 1", "image1.jpg", 30, "Podcast 1" },
-                    { "2", "Author 2", "Description 2", "image2.jpg", 45, "Podcast 2" },
-                    { "3", "Author 3", "Description 3", "image3.jpg", 60, "Podcast 3" }
+                    { 1, "Joe Rogan", "Conversations with interesting people.", "jre.jpg", 120, "The Joe Rogan Experience" },
+                    { 2, "TED", "Exploring big ideas through powerful talks.", "ted.jpg", 60, "TED Radio Hour" },
+                    { 3, "Sarah Koenig", "Investigative journalism series.", "serial.jpg", 45, "Serial" },
+                    { 4, "Tim Ferriss", "Interviews with top performers.", "timferriss.jpg", 90, "The Tim Ferriss Show" },
+                    { 5, "Jad Abumrad & Robert Krulwich", "Science, philosophy, and storytelling.", "radiolab.jpg", 75, "Radiolab" },
+                    { 6, "Josh Clark & Chuck Bryant", "Explaining how stuff works.", "sysk.jpg", 50, "Stuff You Should Know" },
+                    { 7, "Stephen Dubner", "Exploring the hidden side of everything.", "freakonomics.jpg", 55, "Freakonomics Radio" },
+                    { 8, "Guy Raz", "Conversations with entrepreneurs.", "hibt.jpg", 70, "How I Built This" },
+                    { 9, "NPR", "Understanding the economy.", "planetmoney.jpg", 40, "Planet Money" },
+                    { 10, "Ira Glass", "Telling stories of everyday life.", "tal.jpg", 80, "This American Life" }
                 });
 
             migrationBuilder.InsertData(
@@ -104,9 +121,10 @@ namespace podcast_player_BE.Migrations
                 columns: new[] { "Id", "FullName", "Uid" },
                 values: new object[,]
                 {
-                    { "1", "John Doe", "user1" },
-                    { "2", "Jane Smith", "user2" },
-                    { "3", "Alice Johnson", "user3" }
+                    { 1, "Taylor Seager", "user1" },
+                    { 2, "Felicia Mings", "user2" },
+                    { 3, "Cody Tucker", "user3" },
+                    { 4, "Lucas Martin", "user4" }
                 });
         }
 
