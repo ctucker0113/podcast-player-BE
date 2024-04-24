@@ -1,4 +1,5 @@
-﻿using podcast_player_BE.Models;
+﻿using podcast_player_BE.API;
+using podcast_player_BE.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -9,6 +10,48 @@ namespace podcast_player_BE.API
     {
         public static void Map(WebApplication app)
         {
+            // Create Playlist
+            app.MapPost("/api/createPlaylist", (PodcastPlayerDbContext db, Playlist newPlaylist) =>
+            {
+                db.Playlists.Add(newPlaylist);
+                db.SaveChanges();
+                return Results.Created($"/api/createPlaylist/{newPlaylist.Id}", newPlaylist);
+            });
+
+            // Get All Playlists
+            app.MapGet("/api/getAllPlaylists", (PodcastPlayerDbContext db) =>
+            {
+                return db.Playlists.ToList();
+            });
+
+            // Update Playlist Title or Image
+            app.MapPut("/api/updatePlaylist/{id}", (PodcastPlayerDbContext db, int id, Playlist updatedPlaylist) =>
+            {
+                Playlist playlistToUpdate = db.Playlists.SingleOrDefault(Playlist => Playlist.Id == id);
+
+                if (playlistToUpdate == null)
+                {
+                    return Results.NotFound();
+                }
+
+                playlistToUpdate.Title = updatedPlaylist.Title;
+                playlistToUpdate.Image = updatedPlaylist.Image;
+
+                db.SaveChanges();
+                return Results.NoContent();
+            });
+
+            // Delete Playlist
+            app.MapDelete("/api/deletePlaylist/{id}", (PodcastPlayerDbContext db, int id) =>
+            {
+                var playlist = db.Playlists.Find(id);
+                if (playlist == null) return Results.NotFound();
+
+                db.Playlists.Remove(playlist);
+                db.SaveChanges();
+                return Results.NoContent();
+
+            });
         }
     }
 }
