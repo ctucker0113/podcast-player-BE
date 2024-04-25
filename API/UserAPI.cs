@@ -9,6 +9,20 @@ namespace podcast_player_BE.API
     {
         public static void Map(WebApplication app)
         {
+            //Check Users
+            app.MapGet("/checkUser/{uid}", (PodcastPlayerDbContext db, string uid) =>
+            {
+                var user = db.Users.Where(x => x.Uid == uid).ToList();
+
+                if (uid == null)
+                {
+                    return Results.NotFound();
+                }
+                else
+                {
+                    return Results.Ok(user);
+                }
+            });
         }
     }
 }
