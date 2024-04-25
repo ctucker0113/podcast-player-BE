@@ -24,6 +24,33 @@ namespace podcast_player_BE.API
                 return db.Playlists.ToList();
             });
 
+            // Get Single Playlist
+            app.MapGet("/api/getSinglePlaylist/{id}", (PodcastPlayerDbContext db, int id) =>
+            {
+                var playlist = db.Playlists.FirstOrDefault(p => p.Id == id);
+
+                if (playlist == null)
+                {
+                    return Results.NotFound();
+                }
+
+                return Results.Ok(playlist);
+            });
+
+            // Get Users Playlist
+            app.MapGet("/api/getAllUserPlaylists/{userId}", (PodcastPlayerDbContext db, int userId) =>
+            {
+                var playlists = db.Playlists.Where(p => p.OwnerID == userId).ToList();
+
+                if (playlists == null || playlists.Count == 0)
+                {
+                    return Results.NotFound("No playlists found for this user.");
+                }
+
+                return Results.Ok(playlists);
+            });
+
+
             // Update Playlist Title or Image
             app.MapPut("/api/updatePlaylist/{id}", (PodcastPlayerDbContext db, int id, Playlist updatedPlaylist) =>
             {
