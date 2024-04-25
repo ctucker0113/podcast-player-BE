@@ -57,7 +57,15 @@ namespace podcast_player_BE.API
 
                 if (playlist == null || podcast == null)
                 {
-                    return Results.NotFound("Playlist or Item not found.");
+                    return Results.NotFound("Playlist or Podcast not found.");
+                }
+
+                // Check if the playlist already contains the podcast
+                var existingPlaylistPodcast = db.PlaylistPodcasts.FirstOrDefault(pp => pp.PlaylistId == playlistId && pp.PodcastId == podcastId);
+
+                if (existingPlaylistPodcast != null)
+                {
+                    return Results.BadRequest("Podcast already exists in the playlist.");
                 }
 
                 // Create a new playlist podcast and associate it with the playlist
