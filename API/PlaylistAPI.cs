@@ -52,7 +52,7 @@ namespace podcast_player_BE.API
 
 
             // Update Playlist Title or Image
-            app.MapPut("/api/updatePlaylist/{id}", (PodcastPlayerDbContext db, int id, Playlist updatedPlaylist) =>
+            app.MapPatch("/api/updatePlaylist/{id}", (PodcastPlayerDbContext db, int id, Playlist updatedPlaylist) =>
             {
                 Playlist playlistToUpdate = db.Playlists.SingleOrDefault(Playlist => Playlist.Id == id);
 
