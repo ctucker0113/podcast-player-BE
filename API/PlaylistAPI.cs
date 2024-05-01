@@ -77,7 +77,19 @@ namespace podcast_player_BE.API
                 db.Playlists.Remove(playlist);
                 db.SaveChanges();
                 return Results.NoContent();
+            });
 
+            // Get Single Playlist by Playlist Title
+            app.MapGet("/api/getSinglePlaylistByTitle/{title}", (PodcastPlayerDbContext db, string title) =>
+            {
+                var PlaylistTitle = db.Playlists.FirstOrDefault(c => c.Title == title);
+
+                if (PlaylistTitle == null)
+                {
+                    return Results.NotFound("Playlist Not Found.");
+                }
+
+                return Results.Ok(PlaylistTitle);
             });
         }
     }
