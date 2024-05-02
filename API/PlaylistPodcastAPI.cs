@@ -40,10 +40,12 @@ namespace podcast_player_BE.API
                     PlaylistDetails = playlistDetails,
                     Podcasts = playlistPodcasts.Select(pp => new
                     {
-                        PodcastId = pp.Podcast.Id,
-                        PodcastName = pp.Podcast.Name,
-                        PodcastImage = pp.Podcast.Image,
-                        PodcastAuthor = pp.Podcast.Author,
+                        id = pp.Podcast.Id,
+                        name = pp.Podcast.Name,
+                        image = pp.Podcast.Image,
+                        author = pp.Podcast.Author,
+                        length = pp.Podcast.Length,
+                        description = pp.Podcast.Description
                     })
                 };
 
