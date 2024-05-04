@@ -10,6 +10,12 @@ namespace podcast_player_BE.API
     {
         public static void Map(WebApplication app)
         {
+            // Get All Playlist-Podcast Relationships
+            app.MapGet("/api/getAllPlaylistpodcastRelationships", (PodcastPlayerDbContext db) =>
+            {
+                return db.PlaylistPodcasts.ToList();
+            });
+
             // Get All Podcasts For Single Playlist
             app.MapGet("/api/getAllPodcastsForSinglePlaylist/{playlistId}", (PodcastPlayerDbContext db, int playlistId) =>
             {
@@ -87,7 +93,7 @@ namespace podcast_player_BE.API
             // Delete Podcast from a Playlist
             app.MapDelete("/api/DeletePodcastFromPlaylist/{playlistId}/{podcastId}", (PodcastPlayerDbContext db, int playlistId, int podcastId) =>
             {
-                var playlistPodcastToDelete = db.PlaylistPodcasts.SingleOrDefault(playlistPodcast => playlistPodcast.PlaylistId == playlistId && playlistPodcast.PodcastId == playlistId);
+                var playlistPodcastToDelete = db.PlaylistPodcasts.SingleOrDefault(playlistPodcast => playlistPodcast.PlaylistId == playlistId && playlistPodcast.PodcastId == podcastId);
 
                 if (playlistPodcastToDelete == null)
                 {
