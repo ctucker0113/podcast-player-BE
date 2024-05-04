@@ -68,6 +68,45 @@ namespace podcast_player_BE.API
                 return Results.NoContent();
             });
 
+            // Increment podcastQuantity for a Playlist
+            app.MapPatch("/api/incrementPodcastQuantity/{id}", (PodcastPlayerDbContext db, int id) =>
+            {
+                var playlistToUpdate = db.Playlists.SingleOrDefault(p => p.Id == id);
+
+                if (playlistToUpdate == null)
+                {
+                    return Results.NotFound();
+                }
+
+                playlistToUpdate.PodcastQuantity += 1;
+
+                db.SaveChanges();
+                return Results.Ok(playlistToUpdate.PodcastQuantity);
+            });
+
+
+            // Decrement podcastQuantity for a Playlist
+            app.MapPatch("/api/decrementPodcastQuantity/{id}", (PodcastPlayerDbContext db, int id) =>
+            {
+                var playlistToUpdate = db.Playlists.SingleOrDefault(p => p.Id == id);
+
+                if (playlistToUpdate == null)
+                {
+                    return Results.NotFound();
+                }
+
+                if (playlistToUpdate.PodcastQuantity > 0)
+                {
+                    playlistToUpdate.PodcastQuantity -= 1;
+                    db.SaveChanges();
+                    return Results.Ok(playlistToUpdate.PodcastQuantity);
+                }
+                else
+                {
+                    return Results.BadRequest("Podcast quantity cannot be less than zero.");
+                }
+            });
+
             // Delete Playlist
             app.MapDelete("/api/deletePlaylist/{id}", (PodcastPlayerDbContext db, int id) =>
             {
