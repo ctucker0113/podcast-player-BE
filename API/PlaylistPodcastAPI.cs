@@ -51,7 +51,8 @@ namespace podcast_player_BE.API
                         image = pp.Podcast.Image,
                         author = pp.Podcast.Author,
                         length = pp.Podcast.Length,
-                        description = pp.Podcast.Description
+                        description = pp.Podcast.Description,
+                        favorite = pp.Podcast.Favorite
                     })
                 };
 

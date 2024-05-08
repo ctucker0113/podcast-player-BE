@@ -9,5 +9,6 @@ namespace podcast_player_BE.Models
         public int PodcastQuantity { get; set; }
         public string Image { get; set; }
         public int OwnerID { get; set; }
+        public bool Favorite { get; set; }
     }
 }

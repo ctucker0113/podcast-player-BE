@@ -10,5 +10,6 @@ namespace podcast_player_BE.Models
         public string Author { get; set; }
         public string Description { get; set; }
         public int Length { get; set; }
+        public bool Favorite { get; set; }
     }
 }
