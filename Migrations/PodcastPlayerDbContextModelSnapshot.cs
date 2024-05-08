@@ -28,6 +28,9 @@ namespace podcast_player_BE.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<bool>("Favorite")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("Image")
                         .IsRequired()
                         .HasColumnType("text");
@@ -50,6 +53,7 @@ namespace podcast_player_BE.Migrations
                         new
                         {
                             Id = 1,
+                            Favorite = false,
                             Image = "favorites.jpg",
                             OwnerID = 1,
                             PodcastQuantity = 3,
@@ -58,6 +62,7 @@ namespace podcast_player_BE.Migrations
                         new
                         {
                             Id = 2,
+                            Favorite = false,
                             Image = "toppicks.jpg",
                             OwnerID = 2,
                             PodcastQuantity = 2,
@@ -66,6 +71,7 @@ namespace podcast_player_BE.Migrations
                         new
                         {
                             Id = 3,
+                            Favorite = false,
                             Image = "morningdrive.jpg",
                             OwnerID = 3,
                             PodcastQuantity = 1,
@@ -74,6 +80,7 @@ namespace podcast_player_BE.Migrations
                         new
                         {
                             Id = 4,
+                            Favorite = false,
                             Image = "inspiration.jpg",
                             OwnerID = 1,
                             PodcastQuantity = 2,
@@ -82,6 +89,7 @@ namespace podcast_player_BE.Migrations
                         new
                         {
                             Id = 5,
+                            Favorite = false,
                             Image = "dailycommute.jpg",
                             OwnerID = 2,
                             PodcastQuantity = 2,
@@ -186,6 +194,9 @@ namespace podcast_player_BE.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<bool>("Favorite")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("Image")
                         .IsRequired()
                         .HasColumnType("text");
@@ -207,6 +218,7 @@ namespace podcast_player_BE.Migrations
                             Id = 1,
                             Author = "Joe Rogan",
                             Description = "Conversations with interesting people.",
+                            Favorite = false,
                             Image = "jre.jpg",
                             Length = 120,
                             Name = "The Joe Rogan Experience"
@@ -216,6 +228,7 @@ namespace podcast_player_BE.Migrations
                             Id = 2,
                             Author = "TED",
                             Description = "Exploring big ideas through powerful talks.",
+                            Favorite = false,
                             Image = "ted.jpg",
                             Length = 60,
                             Name = "TED Radio Hour"
@@ -225,6 +238,7 @@ namespace podcast_player_BE.Migrations
                             Id = 3,
                             Author = "Sarah Koenig",
                             Description = "Investigative journalism series.",
+                            Favorite = false,
                             Image = "serial.jpg",
                             Length = 45,
                             Name = "Serial"
@@ -234,6 +248,7 @@ namespace podcast_player_BE.Migrations
                             Id = 4,
                             Author = "Tim Ferriss",
                             Description = "Interviews with top performers.",
+                            Favorite = false,
                             Image = "timferriss.jpg",
                             Length = 90,
                             Name = "The Tim Ferriss Show"
@@ -243,6 +258,7 @@ namespace podcast_player_BE.Migrations
                             Id = 5,
                             Author = "Jad Abumrad & Robert Krulwich",
                             Description = "Science, philosophy, and storytelling.",
+                            Favorite = false,
                             Image = "radiolab.jpg",
                             Length = 75,
                             Name = "Radiolab"
@@ -252,6 +268,7 @@ namespace podcast_player_BE.Migrations
                             Id = 6,
                             Author = "Josh Clark & Chuck Bryant",
                             Description = "Explaining how stuff works.",
+                            Favorite = false,
                             Image = "sysk.jpg",
                             Length = 50,
                             Name = "Stuff You Should Know"
@@ -261,6 +278,7 @@ namespace podcast_player_BE.Migrations
                             Id = 7,
                             Author = "Stephen Dubner",
                             Description = "Exploring the hidden side of everything.",
+                            Favorite = false,
                             Image = "freakonomics.jpg",
                             Length = 55,
                             Name = "Freakonomics Radio"
@@ -270,6 +288,7 @@ namespace podcast_player_BE.Migrations
                             Id = 8,
                             Author = "Guy Raz",
                             Description = "Conversations with entrepreneurs.",
+                            Favorite = false,
                             Image = "hibt.jpg",
                             Length = 70,
                             Name = "How I Built This"
@@ -279,6 +298,7 @@ namespace podcast_player_BE.Migrations
                             Id = 9,
                             Author = "NPR",
                             Description = "Understanding the economy.",
+                            Favorite = false,
                             Image = "planetmoney.jpg",
                             Length = 40,
                             Name = "Planet Money"
@@ -288,6 +308,7 @@ namespace podcast_player_BE.Migrations
                             Id = 10,
                             Author = "Ira Glass",
                             Description = "Telling stories of everyday life.",
+                            Favorite = false,
                             Image = "tal.jpg",
                             Length = 80,
                             Name = "This American Life"
