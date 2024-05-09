@@ -55,16 +55,40 @@ namespace podcast_player_BE.API
             app.MapPatch("/api/updatePlaylist/{id}", (PodcastPlayerDbContext db, int id, Playlist updatedPlaylist) =>
             {
                 Playlist playlistToUpdate = db.Playlists.SingleOrDefault(Playlist => Playlist.Id == id);
-
                 if (playlistToUpdate == null)
                 {
                     return Results.NotFound();
                 }
-
                 playlistToUpdate.Title = updatedPlaylist.Title;
                 playlistToUpdate.Image = updatedPlaylist.Image;
-
-                db.SaveChanges();
+                playlistToUpdate.Favorite = updatedPlaylist.Favorite;
+                db.SaveChanges(); app.MapPatch("/api/updatePlaylist/{id}", (PodcastPlayerDbContext db, int id, Playlist updatedPlaylist) =>
+                {
+                    // Check if the updated playlist already exists
+                    var existingPlaylist = db.Playlists.FirstOrDefault(p => p.Id != id &&
+                                                                     p.Title == updatedPlaylist.Title &&
+                                                                     p.Image == updatedPlaylist.Image
+                                                                     );
+                    if (existingPlaylist != null)
+                    {
+                        // Return a response indicating that the playlist already exists
+                        return Results.Conflict("Playlist with the same title and image already exists.");
+                    }
+                    // Fetch the playlist to update
+                    Playlist playlistToUpdate = db.Playlists.SingleOrDefault(p => p.Id == id);
+                    if (playlistToUpdate == null)
+                    {
+                        return Results.NotFound();
+                    }
+                    // Update the playlist details
+                    playlistToUpdate.Title = updatedPlaylist.Title;
+                    playlistToUpdate.Image = updatedPlaylist.Image;
+                    playlistToUpdate.Favorite = updatedPlaylist.Favorite;
+                    // Save changes to the database
+                    db.SaveChanges();
+                    // Return success response
+                    return Results.NoContent();
+                });
                 return Results.NoContent();
             });
 
