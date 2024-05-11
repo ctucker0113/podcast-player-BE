@@ -88,11 +88,6 @@ namespace podcast_player_BE.API
                 db.PlaylistPodcasts.Add(playlistPodcast);
                 db.SaveChanges();
 
-                // Increment podcast quantity for the playlist
-                playlist.PodcastQuantity++;
-
-                db.SaveChanges();
-
                 return Results.Created($"/api/addPodcastToPlaylist/{playlistId}/{podcastId}", playlistId);
             });
 
